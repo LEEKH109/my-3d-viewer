@@ -73,7 +73,7 @@ const UploadArea = styled.div`
 	align-items: center;
 	justify-content: center;
 	border: 2px dashed #cccccc;
-	border-radius: 4px;
+	border-radius: 8px; /* 점선 코너를 동그랗게 수정 */
 	width: 60%;
 	height: 400px;
 	margin-bottom: 30px;
@@ -81,12 +81,13 @@ const UploadArea = styled.div`
 
 const UploadButton = styled.label`
 	display: inline-block;
-	padding: 10px 20px;
+	padding: 12px 24px; /* 버튼 사이즈를 조금 크게 수정 */
 	background-color: #007bff;
 	color: white;
 	font-size: 16px;
 	cursor: pointer;
 	border-radius: 4px;
+	margin-top: 20px; /* 버튼 위치를 약간 내리기 */
 `;
 
 const Footer = styled.footer`
