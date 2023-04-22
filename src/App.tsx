@@ -1,0 +1,100 @@
+import React, { useState } from 'react';
+import styled from 'styled-components';
+
+const App: React.FC = () => {
+	const [fileUploaded, setFileUploaded] = useState(false);
+
+	const handleFileUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
+		if (event.target.files && event.target.files.length > 0) {
+			setFileUploaded(true);
+			// 파일 업로드 처리를 수행하세요.
+		}
+	};
+
+	return (
+		<Container>
+			<Header>
+				Free 3D Web Viewer
+				<br />
+				<KoreanHeader>무료 3D 웹 뷰어</KoreanHeader>
+			</Header>
+			<Text>
+				Click and upload the file to operate.
+				<br />
+				<KoreanText>파일을 클릭하여 업로드하면 작동합니다.</KoreanText>
+			</Text>
+			<UploadArea>
+				{!fileUploaded && (
+					<>
+						<UploadButton htmlFor='file-upload'>파일 업로드</UploadButton>
+						<input id='file-upload' type='file' onChange={handleFileUpload} style={{ display: 'none' }} />
+					</>
+				)}
+				{fileUploaded && <div>로딩 SVG...</div>}
+			</UploadArea>
+			<Footer>저작권 관련 정보 © 2023</Footer>
+		</Container>
+	);
+};
+
+const Container = styled.div`
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: flex-start;
+	min-height: 100vh;
+	padding-top: 50px;
+`;
+
+const Header = styled.header`
+	font-size: 32px;
+	font-weight: bold;
+	margin-bottom: 20px;
+	text-align: center;
+`;
+
+const KoreanHeader = styled.span`
+	font-size: 30px;
+`;
+
+const Text = styled.p`
+	font-size: 18px;
+	text-align: center;
+	max-width: 600px;
+	margin-bottom: 30px;
+`;
+
+const KoreanText = styled.span`
+	font-size: 16px;
+`;
+
+const UploadArea = styled.div`
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	border: 2px dashed #cccccc;
+	border-radius: 4px;
+	width: 60%;
+	height: 400px;
+	margin-bottom: 30px;
+`;
+
+const UploadButton = styled.label`
+	display: inline-block;
+	padding: 10px 20px;
+	background-color: #007bff;
+	color: white;
+	font-size: 16px;
+	cursor: pointer;
+	border-radius: 4px;
+`;
+
+const Footer = styled.footer`
+	font-size: 14px;
+	position: absolute;
+	bottom: 20px;
+	text-align: center;
+	width: 100%;
+`;
+
+export default App;
