@@ -21,8 +21,8 @@ const App: React.FC = () => {
 			if (uploadStep === 0 && allowedObjExtensions.includes(fileExtension!)) {
 				setObjFile(file);
 				setUploadStep(1);
-			} else if (uploadStep === 1 && allowedMtlExtensions.includes(fileExtension!)) {
-				setMtlFile(file);
+			} else if (uploadStep === 1 && allowedImgExtensions.includes(fileExtension!)) {
+				setImgFile(file);
 				setUploadStep(2);
 			} else if (uploadStep === 2 && allowedImgExtensions.includes(fileExtension!)) {
 				setImgFile(file);
@@ -55,7 +55,7 @@ const App: React.FC = () => {
 			</Text>
 			<UploadArea>
 				<ModelContainer>
-					{objFile && <ModelViewer objFile={objFile} mtlFile={mtlFile} imgFile={imgFile} />}
+					{objFile && <ModelViewer objFile={objFile} imgFile={imgFile} />}
 					<UploadButtonContainer centered={!objFile}>
 						<UploadButton htmlFor='file-upload'>{uploadStep === 0 ? '파일 업로드' : '스킨 파일 업로드'}</UploadButton>
 						<input id='file-upload' type='file' onChange={handleFileUpload} style={{ display: 'none' }} />

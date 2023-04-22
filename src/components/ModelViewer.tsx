@@ -9,11 +9,10 @@ import { Group } from 'three';
 
 interface ModelViewerProps {
 	objFile: File;
-	mtlFile: File | null;
 	imgFile: File | null;
 }
 
-const ModelViewer: React.FC<ModelViewerProps> = ({ objFile, mtlFile, imgFile }) => {
+const ModelViewer: React.FC<ModelViewerProps> = ({ objFile, imgFile }) => {
 	const [objUrl, setObjUrl] = useState<string | null>(null);
 	const [imgUrl, setImgUrl] = useState<string | null>(null);
 
