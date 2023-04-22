@@ -1,34 +1,45 @@
 import React, { useEffect, useRef, useState, Suspense } from 'react';
 import { Canvas } from '@react-three/fiber';
-import { useLoader, useThree } from '@react-three/fiber';
-import { OBJLoader } from 'three-stdlib/loaders/OBJLoader';
 import { Environment, OrbitControls } from '@react-three/drei';
+import { OBJLoader } from 'three/examples/jsm/loaders/OBJLoader';
+import { useLoader } from '@react-three/fiber';
+import { Group } from 'three';
 
-interface ModelProps {
+interface ModelViewerProps {
 	file: File;
 }
 
-const Model: React.FC<ModelProps> = ({ file }) => {
-	const objUrl = URL.createObjectURL(file);
-	const obj = useLoader(OBJLoader, objUrl);
+const ModelViewer: React.FC<ModelViewerProps> = ({ file }) => {
+	const [objUrl, setObjUrl] = useState<string | null>(null);
 
 	useEffect(() => {
-		return () => {
-			URL.revokeObjectURL(objUrl);
+		const reader = new FileReader();
+		reader.onload = (e) => {
+			if (e.target?.result) {
+				setObjUrl(e.target.result as string);
+			}
 		};
-	}, [objUrl]);
+		reader.readAsDataURL(file);
+	}, [file]);
 
-	return <primitive object={obj} />;
-};
+	const Model = () => {
+		const obj = useLoader(OBJLoader, objUrl as string);
+		const meshRef = useRef<Group>();
 
-const ModelViewer: React.FC<ModelProps> = ({ file }) => {
-	if (!file) return null;
+		useEffect(() => {
+			if (meshRef.current) {
+				meshRef.current.scale.set(20, 20, 20); // 모델의 크기를 조절
+			}
+		}, [meshRef]);
+
+		return <primitive ref={meshRef} object={obj} />;
+	};
 
 	return (
 		<Canvas>
 			<ambientLight intensity={0.5} />
 			<Suspense fallback={null}>
-				<Model file={file} />
+				{objUrl && <Model />}
 				<Environment preset='sunset' />
 			</Suspense>
 			<OrbitControls />
