@@ -32,6 +32,19 @@ const App: React.FC = () => {
 		}
 	};
 
+	const getButtonText = () => {
+		switch (uploadStep) {
+			case 0:
+				return '파일 업로드';
+			case 1:
+				return '모델 스킨 파일 업로드';
+			case 2:
+				return '스킨 파일 교체';
+			default:
+				return '파일 업로드';
+		}
+	};
+
 	return (
 		<Container>
 			<Header>
@@ -45,12 +58,14 @@ const App: React.FC = () => {
 				<KoreanText>파일을 클릭하여 업로드하면 작동합니다.</KoreanText>
 			</Text>
 			<UploadArea>
-				<UploadButton htmlFor='file-upload'>
-					{uploadStep === 0 ? '모델 파일 업로드' : uploadStep === 1 ? '스킨 파일 업로드' : '스킨 파일 교체'}
-				</UploadButton>
-				<input id='file-upload' type='file' onChange={handleFileUpload} style={{ display: 'none' }} />
+				<ModelContainer>
+					{objFile && <ModelViewer objFile={objFile} mtlFile={mtlFile} imgFile={imgFile} />}
+					<UploadButtonContainer>
+						<UploadButton htmlFor='file-upload'>{getButtonText()}</UploadButton>
+						<input id='file-upload' type='file' onChange={handleFileUpload} style={{ display: 'none' }} />
+					</UploadButtonContainer>
+				</ModelContainer>
 			</UploadArea>
-			{objFile && <ModelViewer objFile={objFile} mtlFile={mtlFile} imgFile={imgFile} />}
 			<Footer>저작권 관련 정보 © 2023</Footer>
 		</Container>
 	);
@@ -63,6 +78,12 @@ const Container = styled.div`
 	justify-content: flex-start;
 	min-height: 100vh;
 	padding-top: 50px;
+`;
+
+const ModelContainer = styled.div`
+	position: relative;
+	width: 100%;
+	height: 100%;
 `;
 
 const Header = styled.header`
@@ -96,6 +117,13 @@ const UploadArea = styled.div`
 	width: 60%;
 	height: 400px;
 	margin-bottom: 30px;
+`;
+
+const UploadButtonContainer = styled.div`
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
 `;
 
 const UploadButton = styled.label`
