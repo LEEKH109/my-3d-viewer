@@ -3,11 +3,32 @@ import styled from 'styled-components';
 
 const App: React.FC = () => {
 	const [fileUploaded, setFileUploaded] = useState(false);
+	const [uploadedFile, setUploadedFile] = useState<File | null>(null);
+	const [loading, setLoading] = useState(false);
 
 	const handleFileUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
 		if (event.target.files && event.target.files.length > 0) {
+			const file = event.target.files[0];
+			const fileType = file.type;
+			const fileName = file.name;
+			const fileExtension = fileName.split('.').pop()?.toLowerCase();
+
+			// 허용되는 파일 종류를 제한합니다.
+			const allowedFileTypes = ['image/jpeg', 'image/png', 'application/x-blender'];
+			const allowedFileExtensions = ['jpg', 'jpeg', 'png', 'blend'];
+
+			if (!allowedFileTypes.includes(fileType) && (!fileExtension || !allowedFileExtensions.includes(fileExtension))) {
+				alert('허용되지 않은 파일 형식입니다. 다른 파일을 선택하세요.');
+				return;
+			}
+
 			setFileUploaded(true);
+			setUploadedFile(file);
+
 			// 파일 업로드 처리를 수행하세요.
+			setTimeout(() => {
+				setLoading(true);
+			}, 1000);
 		}
 	};
 
@@ -30,7 +51,8 @@ const App: React.FC = () => {
 						<input id='file-upload' type='file' onChange={handleFileUpload} style={{ display: 'none' }} />
 					</>
 				)}
-				{fileUploaded && <div>로딩 SVG...</div>}
+				{fileUploaded && !loading && <div>로딩 SVG...</div>}
+				{fileUploaded && loading && <div>로딩 완료</div>}
 			</UploadArea>
 			<Footer>저작권 관련 정보 © 2023</Footer>
 		</Container>
