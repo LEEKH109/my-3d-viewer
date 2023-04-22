@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
+import ModelViewer from './components/ModelViewer';
 
 const App: React.FC = () => {
 	const [fileUploaded, setFileUploaded] = useState(false);
@@ -14,8 +15,8 @@ const App: React.FC = () => {
 			const fileExtension = fileName.split('.').pop()?.toLowerCase();
 
 			// 허용되는 파일 종류를 제한합니다.
-			const allowedFileTypes = ['image/jpeg', 'image/png', 'application/x-blender'];
-			const allowedFileExtensions = ['jpg', 'jpeg', 'png', 'blend'];
+			const allowedFileTypes = ['model/obj'];
+			const allowedFileExtensions = ['obj'];
 
 			if (!allowedFileTypes.includes(fileType) && (!fileExtension || !allowedFileExtensions.includes(fileExtension))) {
 				alert('허용되지 않은 파일 형식입니다. 다른 파일을 선택하세요.');
@@ -28,7 +29,7 @@ const App: React.FC = () => {
 			// 파일 업로드 처리를 수행하세요.
 			setTimeout(() => {
 				setLoading(true);
-			}, 1000);
+			}, 100);
 		}
 	};
 
@@ -52,7 +53,7 @@ const App: React.FC = () => {
 					</>
 				)}
 				{fileUploaded && !loading && <div>로딩 SVG...</div>}
-				{fileUploaded && loading && <div>로딩 완료</div>}
+				{fileUploaded && loading && uploadedFile && <ModelViewer file={uploadedFile} />}
 			</UploadArea>
 			<Footer>저작권 관련 정보 © 2023</Footer>
 		</Container>
