@@ -4,7 +4,6 @@ import ModelViewer from './components/ModelViewer';
 
 const App: React.FC = () => {
 	const [objFile, setObjFile] = useState<File | null>(null);
-	const [mtlFile, setMtlFile] = useState<File | null>(null);
 	const [imgFile, setImgFile] = useState<File | null>(null);
 	const [uploadStep, setUploadStep] = useState(0);
 
@@ -15,7 +14,6 @@ const App: React.FC = () => {
 			const fileExtension = fileName.split('.').pop()?.toLowerCase();
 
 			const allowedObjExtensions = ['obj'];
-			const allowedMtlExtensions = ['mtl'];
 			const allowedImgExtensions = ['jpg', 'jpeg', 'png'];
 
 			if (uploadStep === 0 && allowedObjExtensions.includes(fileExtension!)) {
@@ -36,7 +34,6 @@ const App: React.FC = () => {
 
 	const handleReset = () => {
 		setObjFile(null);
-		setMtlFile(null);
 		setImgFile(null);
 		setUploadStep(0);
 	};
@@ -57,7 +54,9 @@ const App: React.FC = () => {
 				<ModelContainer>
 					{objFile && <ModelViewer objFile={objFile} imgFile={imgFile} />}
 					<UploadButtonContainer centered={!objFile}>
-						<UploadButton htmlFor='file-upload'>{uploadStep === 0 ? '파일 업로드' : '스킨 파일 업로드'}</UploadButton>
+						<UploadButton htmlFor='file-upload'>
+							{uploadStep === 0 ? '파일 업로드' : uploadStep === 1 ? '스킨 파일 업로드' : uploadStep === 2 ? '스킨 파일 변경' : '스킨 파일 변경'}
+						</UploadButton>
 						<input id='file-upload' type='file' onChange={handleFileUpload} style={{ display: 'none' }} />
 						{objFile && (
 							<ResetButton htmlFor='file-reset' onClick={handleReset}>
