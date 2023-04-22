@@ -6,6 +6,7 @@ const App: React.FC = () => {
 	const [objFile, setObjFile] = useState<File | null>(null);
 	const [mtlFile, setMtlFile] = useState<File | null>(null);
 	const [imgFile, setImgFile] = useState<File | null>(null);
+	const [uploadStep, setUploadStep] = useState(0);
 
 	const handleFileUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
 		if (event.target.files && event.target.files.length > 0) {
@@ -20,10 +21,10 @@ const App: React.FC = () => {
 
 			if (allowedObjExtensions.includes(fileExtension!)) {
 				setObjFile(file);
-			} else if (allowedMtlExtensions.includes(fileExtension!)) {
-				setMtlFile(file);
+				setUploadStep(1);
 			} else if (allowedImgExtensions.includes(fileExtension!)) {
 				setImgFile(file);
+				setUploadStep(2);
 			} else {
 				alert('허용되지 않은 파일 형식입니다. 다른 파일을 선택하세요.');
 				return;
@@ -44,7 +45,9 @@ const App: React.FC = () => {
 				<KoreanText>파일을 클릭하여 업로드하면 작동합니다.</KoreanText>
 			</Text>
 			<UploadArea>
-				<UploadButton htmlFor='file-upload'>파일 업로드</UploadButton>
+				<UploadButton htmlFor='file-upload'>
+					{uploadStep === 0 ? '모델 파일 업로드' : uploadStep === 1 ? '스킨 파일 업로드' : '스킨 파일 교체'}
+				</UploadButton>
 				<input id='file-upload' type='file' onChange={handleFileUpload} style={{ display: 'none' }} />
 			</UploadArea>
 			{objFile && <ModelViewer objFile={objFile} mtlFile={mtlFile} imgFile={imgFile} />}
