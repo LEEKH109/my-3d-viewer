@@ -3,9 +3,9 @@ import styled from 'styled-components';
 import ModelViewer from './components/ModelViewer';
 
 const App: React.FC = () => {
-	const [fileUploaded, setFileUploaded] = useState(false);
-	const [uploadedFile, setUploadedFile] = useState<File | null>(null);
-	const [loading, setLoading] = useState(false);
+	const [objFile, setObjFile] = useState<File | null>(null);
+	const [mtlFile, setMtlFile] = useState<File | null>(null);
+	const [imgFile, setImgFile] = useState<File | null>(null);
 
 	const handleFileUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
 		if (event.target.files && event.target.files.length > 0) {
@@ -14,22 +14,20 @@ const App: React.FC = () => {
 			const fileName = file.name;
 			const fileExtension = fileName.split('.').pop()?.toLowerCase();
 
-			// 허용되는 파일 종류를 제한합니다.
-			const allowedFileTypes = ['model/obj'];
-			const allowedFileExtensions = ['obj'];
+			const allowedObjExtensions = ['obj'];
+			const allowedMtlExtensions = ['mtl'];
+			const allowedImgExtensions = ['jpg', 'jpeg', 'png'];
 
-			if (!allowedFileTypes.includes(fileType) && (!fileExtension || !allowedFileExtensions.includes(fileExtension))) {
+			if (allowedObjExtensions.includes(fileExtension!)) {
+				setObjFile(file);
+			} else if (allowedMtlExtensions.includes(fileExtension!)) {
+				setMtlFile(file);
+			} else if (allowedImgExtensions.includes(fileExtension!)) {
+				setImgFile(file);
+			} else {
 				alert('허용되지 않은 파일 형식입니다. 다른 파일을 선택하세요.');
 				return;
 			}
-
-			setFileUploaded(true);
-			setUploadedFile(file);
-
-			// 파일 업로드 처리를 수행하세요.
-			setTimeout(() => {
-				setLoading(true);
-			}, 100);
 		}
 	};
 
@@ -46,15 +44,10 @@ const App: React.FC = () => {
 				<KoreanText>파일을 클릭하여 업로드하면 작동합니다.</KoreanText>
 			</Text>
 			<UploadArea>
-				{!fileUploaded && (
-					<>
-						<UploadButton htmlFor='file-upload'>파일 업로드</UploadButton>
-						<input id='file-upload' type='file' onChange={handleFileUpload} style={{ display: 'none' }} />
-					</>
-				)}
-				{fileUploaded && !loading && <div>로딩 SVG...</div>}
-				{fileUploaded && loading && uploadedFile && <ModelViewer file={uploadedFile} />}
+				<UploadButton htmlFor='file-upload'>파일 업로드</UploadButton>
+				<input id='file-upload' type='file' onChange={handleFileUpload} style={{ display: 'none' }} />
 			</UploadArea>
+			{objFile && <ModelViewer objFile={objFile} mtlFile={mtlFile} imgFile={imgFile} />}
 			<Footer>저작권 관련 정보 © 2023</Footer>
 		</Container>
 	);
