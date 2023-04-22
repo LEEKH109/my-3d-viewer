@@ -11,7 +11,6 @@ const App: React.FC = () => {
 	const handleFileUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
 		if (event.target.files && event.target.files.length > 0) {
 			const file = event.target.files[0];
-			const fileType = file.type;
 			const fileName = file.name;
 			const fileExtension = fileName.split('.').pop()?.toLowerCase();
 
@@ -19,12 +18,15 @@ const App: React.FC = () => {
 			const allowedMtlExtensions = ['mtl'];
 			const allowedImgExtensions = ['jpg', 'jpeg', 'png'];
 
-			if (allowedObjExtensions.includes(fileExtension!)) {
+			if (uploadStep === 0 && allowedObjExtensions.includes(fileExtension!)) {
 				setObjFile(file);
 				setUploadStep(1);
-			} else if (allowedImgExtensions.includes(fileExtension!)) {
-				setImgFile(file);
+			} else if (uploadStep === 1 && allowedMtlExtensions.includes(fileExtension!)) {
+				setMtlFile(file);
 				setUploadStep(2);
+			} else if (uploadStep === 2 && allowedImgExtensions.includes(fileExtension!)) {
+				setImgFile(file);
+				setUploadStep(3);
 			} else {
 				alert('허용되지 않은 파일 형식입니다. 다른 파일을 선택하세요.');
 				return;
@@ -32,17 +34,11 @@ const App: React.FC = () => {
 		}
 	};
 
-	const getButtonText = () => {
-		switch (uploadStep) {
-			case 0:
-				return '파일 업로드';
-			case 1:
-				return '모델 스킨 파일 업로드';
-			case 2:
-				return '스킨 파일 교체';
-			default:
-				return '파일 업로드';
-		}
+	const handleReset = () => {
+		setObjFile(null);
+		setMtlFile(null);
+		setImgFile(null);
+		setUploadStep(0);
 	};
 
 	return (
@@ -60,9 +56,14 @@ const App: React.FC = () => {
 			<UploadArea>
 				<ModelContainer>
 					{objFile && <ModelViewer objFile={objFile} mtlFile={mtlFile} imgFile={imgFile} />}
-					<UploadButtonContainer>
-						<UploadButton htmlFor='file-upload'>{getButtonText()}</UploadButton>
+					<UploadButtonContainer centered={!objFile}>
+						<UploadButton htmlFor='file-upload'>{uploadStep === 0 ? '파일 업로드' : '스킨 파일 업로드'}</UploadButton>
 						<input id='file-upload' type='file' onChange={handleFileUpload} style={{ display: 'none' }} />
+						{objFile && (
+							<ResetButton htmlFor='file-reset' onClick={handleReset}>
+								리셋
+							</ResetButton>
+						)}
 					</UploadButtonContainer>
 				</ModelContainer>
 			</UploadArea>
@@ -113,28 +114,47 @@ const UploadArea = styled.div`
 	align-items: center;
 	justify-content: center;
 	border: 2px dashed #cccccc;
-	border-radius: 30px; /* 점선 코너를 동그랗게 수정 */
+	border-radius: 30px;
 	width: 60%;
 	height: 400px;
 	margin-bottom: 30px;
+
+	@media (max-width: 768px) {
+		width: 80%;
+		height: 300px;
+	}
 `;
 
-const UploadButtonContainer = styled.div`
-	position: absolute;
-	top: 50%;
-	left: 50%;
-	transform: translate(-50%, -50%);
+const UploadButtonContainer = styled.div<{ centered: boolean }>`
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	margin-top: ${({ centered }) => (centered ? 'calc(50% - 24px)' : '20px')};
+
+	@media (max-width: 768px) {
+		margin-top: ${({ centered }) => (centered ? 'calc(50% - 24px)' : '10px')};
+	}
 `;
 
 const UploadButton = styled.label`
 	display: inline-block;
-	padding: 12px 24px; /* 버튼 사이즈를 조금 크게 수정 */
+	padding: 12px 24px;
 	background-color: #007bff;
 	color: white;
 	font-size: 16px;
 	cursor: pointer;
 	border-radius: 4px;
-	margin-top: 100px; /* 버튼 위치를 약간 내리기 */
+`;
+
+const ResetButton = styled.label`
+	display: inline-block;
+	padding: 12px 24px;
+	background-color: #800020;
+	color: white;
+	font-size: 16px;
+	cursor: pointer;
+	border-radius: 4px;
+	margin-top: 10px;
 `;
 
 const Footer = styled.footer`
