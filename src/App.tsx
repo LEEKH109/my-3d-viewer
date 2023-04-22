@@ -24,7 +24,7 @@ const App: React.FC = () => {
 				setUploadStep(2);
 			} else if (uploadStep === 2 && allowedImgExtensions.includes(fileExtension!)) {
 				setImgFile(file);
-				setUploadStep(3);
+				setUploadStep(2);
 			} else {
 				alert('허용되지 않은 파일 형식입니다. 다른 파일을 선택하세요.');
 				return;
@@ -55,7 +55,7 @@ const App: React.FC = () => {
 					{objFile && <ModelViewer objFile={objFile} imgFile={imgFile} />}
 					<UploadButtonContainer centered={!objFile}>
 						<UploadButton htmlFor='file-upload'>
-							{uploadStep === 0 ? '파일 업로드' : uploadStep === 1 ? '스킨 파일 업로드' : uploadStep === 2 ? '스킨 파일 변경' : '스킨 파일 변경'}
+							{uploadStep === 0 ? '파일 업로드' : uploadStep === 1 ? '스킨 파일 업로드' : uploadStep === 2 ? '스킨 파일 변경' : 'ERROR'}
 						</UploadButton>
 						<input id='file-upload' type='file' onChange={handleFileUpload} style={{ display: 'none' }} />
 						{objFile && (
