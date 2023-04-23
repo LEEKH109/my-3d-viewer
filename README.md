@@ -1,46 +1,46 @@
-# Getting Started with Create React App
+# Web 3D Model Viewer
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+### This is a WEB project designed to make it possible to view 3D model files anywhere that are otherwise difficult to view without a dedicated program.
 
-## Available Scripts
+### 이 프로젝트는 전용 프로그램 없이는 확인하기 힘든 3D 모델 파일들을 어디에서나 확인 할 수 있도록 만든 WEB 프로젝트 입니다.
 
-In the project directory, you can run:
+<br/>
+<br/>
 
-### `npm start`
+# Usage / 사용 방법
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+### To use the 3D viewer, follow the steps below.
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+### 3d 뷰어를 사용하시려면 아래와 같은 단계로 진행하시면 됩니다.
 
-### `npm test`
+#### 1. Upload the 3D model file in one of the following formats: OBJ, GLTF, GLB, FBX, Collada, PLY, or STL
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+#### 다음 형식 중 하나의 3D 모델 파일을 업로드하세요: OBJ, GLTF, FBX, Collada, PLY, 또는 STL
 
-### `npm run build`
+<br/>
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+#### 2. Upload your skin file (we support JPD, JPEG, and PNG file formats).
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+#### 스킨 파일을 업로드 하세요(JPD, JPEG, PNG 파일 형식을 지원합니다.)
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+<br/>
 
-### `npm run eject`
+#### 3. Change the skin file to see how it affects the appearance of the model.
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+#### 스킨 파일을 변경하여 모델의 모양이 어떻게 바뀌는지 확인하세요.
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+## Technology / 사용 기술
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+---
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+### I used the following technology stack to create this viewer:
 
-## Learn More
+### 이 뷰어를 만드는 데 다음과 같은 기술 스택을 사용했습니다:
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+#### TypeScript
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+#### React
+
+#### Styled-components
+
+#### Three.js
