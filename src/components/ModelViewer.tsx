@@ -110,11 +110,12 @@ const ModelViewer: React.FC<ModelViewerProps> = ({ objFile, imgFile }) => {
 				const maxDimension = Math.max(size.x, size.y, size.z);
 
 				// 원하는 모델 크기를 설정합니다.
-				const targetSize = 5;
+				const targetSize = 4;
 
 				// 스케일 값을 계산하고 적용합니다.
 				const scale = targetSize / maxDimension;
 				obj.scale.set(scale, scale, scale);
+				obj.position.y -= 1;
 			}
 		}, [obj]);
 
