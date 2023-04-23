@@ -102,10 +102,21 @@ const ModelViewer: React.FC<ModelViewerProps> = ({ objFile, imgFile }) => {
 		const texture = imgUrl ? new TextureLoader().load(imgUrl) : null;
 
 		useEffect(() => {
-			if (meshRef.current) {
-				meshRef.current.scale.set(15, 15, 15); // 모델의 크기를 조절
+			if (obj) {
+				// 모델의 bounding box를 계산합니다.
+				const box = new THREE.Box3().setFromObject(obj);
+				const size = box.getSize(new THREE.Vector3());
+				console.log(size);
+				const maxDimension = Math.max(size.x, size.y, size.z);
+
+				// 원하는 모델 크기를 설정합니다.
+				const targetSize = 5;
+
+				// 스케일 값을 계산하고 적용합니다.
+				const scale = targetSize / maxDimension;
+				obj.scale.set(scale, scale, scale);
 			}
-		}, [meshRef]);
+		}, [obj]);
 
 		if (texture && obj) {
 			obj.traverse((child) => {
