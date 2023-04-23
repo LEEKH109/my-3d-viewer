@@ -8,9 +8,8 @@ import { ColladaLoader } from 'three/examples/jsm/loaders/ColladaLoader';
 import { PLYLoader } from 'three/examples/jsm/loaders/PLYLoader';
 import { STLLoader } from 'three/examples/jsm/loaders/STLLoader';
 import { TextureLoader } from 'three/src/loaders/TextureLoader';
+// import { MTLLoader } from 'three/examples/jsm/loaders/MTLLoader'; // 주석 처리
 import * as THREE from 'three';
-import { useLoader } from '@react-three/fiber';
-import { Group } from 'three';
 import { Object3D } from 'three';
 
 interface ModelViewerProps {
@@ -104,7 +103,7 @@ const ModelViewer: React.FC<ModelViewerProps> = ({ objFile, imgFile }) => {
 
 		useEffect(() => {
 			if (meshRef.current) {
-				meshRef.current.scale.set(10, 10, 10); // 모델의 크기를 조절
+				meshRef.current.scale.set(15, 15, 15); // 모델의 크기를 조절
 			}
 		}, [meshRef]);
 
