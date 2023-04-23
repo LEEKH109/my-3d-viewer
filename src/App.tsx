@@ -158,8 +158,8 @@ const ResetButton = styled.label`
 
 const Footer = styled.footer`
 	font-size: 14px;
-	position: absolute;
-	bottom: 20px;
+	position: fixed;
+	bottom: 10px;
 	text-align: center;
 	width: 100%;
 `;
