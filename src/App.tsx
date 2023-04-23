@@ -14,7 +14,7 @@ const App: React.FC = () => {
 			const fileExtension = fileName.split('.').pop()?.toLowerCase();
 
 			const allowedObjExtensions = ['obj', 'gltf', 'glb', 'fbx', 'dae', 'ply', 'stl'];
-			const allowedImgExtensions = ['jpg', 'jpeg', 'png'];
+			const allowedImgExtensions = ['jpg', 'jpeg', 'png', 'mtl'];
 
 			if (uploadStep === 0 && allowedObjExtensions.includes(fileExtension!)) {
 				setObjFile(file);
