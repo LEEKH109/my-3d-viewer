@@ -13,7 +13,7 @@ const App: React.FC = () => {
 			const fileName = file.name;
 			const fileExtension = fileName.split('.').pop()?.toLowerCase();
 
-			const allowedObjExtensions = ['obj'];
+			const allowedObjExtensions = ['obj', 'gltf', 'glb', 'fbx', 'dae', 'ply', 'stl'];
 			const allowedImgExtensions = ['jpg', 'jpeg', 'png'];
 
 			if (uploadStep === 0 && allowedObjExtensions.includes(fileExtension!)) {
@@ -66,7 +66,7 @@ const App: React.FC = () => {
 					</UploadButtonContainer>
 				</ModelContainer>
 			</UploadArea>
-			<Footer>저작권 관련 정보 © 2023</Footer>
+			<Footer>copyright 저작권 관련 정보 © 2023 @LEEKH109</Footer>
 		</Container>
 	);
 };
